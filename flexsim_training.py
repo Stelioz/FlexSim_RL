@@ -9,11 +9,12 @@ def main():
 
     # Create a FlexSim OpenAI Gym Environment
     env = FlexSimEnv(
-        flexsimPath = "C:/Program Files/FlexSim 2022/program/flexsim.exe",
-        modelPath = "C:/Users/USERNAME/Documents/FlexSim 2022 Projects/MyModel.fsm",
+        flexsimPath = "C:/Program Files/FlexSim 2024 Update 2/program/flexsim.exe", # Edit Local Path to FlexSim executable
+        modelPath = "C:/Users/steal/Documents/FlexSim 2024 Projects/Models/ChangeoverTimesRL.fsm", # Edit Local Path to FlexSim model
         verbose = False,
         visible = False
         )
+    
     check_env(env) # Check that an environment follows Gym API.
 
     # Training a baselines3 PPO model in the environment
@@ -21,7 +22,7 @@ def main():
     print("Training model...")
     model.learn(total_timesteps=10000)
     
-    # save the model
+    # Save the model
     print("Saving model...")
     model.save("MyTrainedModel")
 
@@ -30,22 +31,22 @@ def main():
     # Run test episodes using the trained model
     for i in range(2):
         env.seed(i)
-        observation = env.reset()
+        observation, _ = env.reset()  # Unpack the observation from the tuple
         env.render()
         done = False
         rewards = []
         while not done:
-            action, _states = model.predict(observation)
-            observation, reward, done, info = env.step(action)
+            action, _states = model.predict(observation)  # Pass only the observation
+            observation, reward, terminated, truncated, info = env.step(action)  # Expecting five return values
             env.render()
             rewards.append(reward)
-            if done:
+            if terminated:
                 cumulative_reward = sum(rewards)
                 print("Reward: ", cumulative_reward, "\n")
+
     env._release_flexsim()
     input("Waiting for input to close FlexSim...")
     env.close()
-
 
 if __name__ == "__main__":
     main()

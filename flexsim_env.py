@@ -199,8 +199,8 @@ class NumpyEncoder(json.JSONEncoder):
 def main():
 
     env = FlexSimEnv(
-        flexsimPath = "C:/Program Files/FlexSim 2022/program/flexsim.exe",
-        modelPath = "C:/Users/USERNAME/Documents/FlexSim 2022 Projects/MyModel.fsm",
+        flexsimPath = "C:/Program Files/FlexSim 2024 Update 2/program/flexsim.exe", # Edit Local Path to FlexSim executable
+        modelPath = "C:/Users/steal/Documents/FlexSim 2024 Projects/Models/ChangeoverTimesRL.fsm", # Edit Local Path to FlexSim model
         verbose = True,
         visible = True
         )
