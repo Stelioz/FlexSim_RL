@@ -1,4 +1,3 @@
-/venv
-/ChangeoverTimesModel.zip
-/.gitignore
+venv/
+ChangeoverTimesModel.zip
 __pycache__/
