@@ -14,7 +14,7 @@ The objective of this Repository is to develop an agent capable of making intell
 1) Download and install VS Code, its Python extension, and Python 3 by following [VS Code Python Tutorial](https://code.visualstudio.com/docs/python/python-tutorial).
 2) Clone this repository to your local machine.
 3) In the project directory create a virtual environment, running: `python -m venv venv`.
-4) In the project directory activate the virtual environment, running: `.\FlexSim_RL_env\Scripts\Activate`.
+4) In the project directory activate the virtual environment, running: `.\venv\Scripts\Activate`.
 5) In the project directory install necessary dependencies, running: `pip install -r requirements.txt`
 6) Edit `flexsimPath` and `modelPath` in `flexsim_env.py` to correspond to your local paths.
 7) Edit `flexsimPath` and `modelPath` in `flexsim_training.py` to correspond to your local paths.

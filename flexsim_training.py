@@ -9,8 +9,8 @@ def main():
 
     # Create a FlexSim OpenAI Gym Environment
     env = FlexSimEnv(
-        flexsimPath = "C:/Program Files/FlexSim 2024 Update 2/program/flexsim.exe", # Edit Local Path to FlexSim executable
-        modelPath = "C:/Users/steal/Documents/FlexSim/Test_Models/ChangeoverTimesRL.fsm", # Edit Local Path to FlexSim model
+        flexsimPath = "C....../FlexSim 2024 Update 2/program/flexsim.exe", # Edit Local Path to FlexSim executable, replace the dots with the actual path
+        modelPath = "....../ChangeoverTimesRL.fsm", # Edit Local Path to FlexSim model, replace the dots with the actual path
         verbose = False,
         visible = False
         )
@@ -20,7 +20,7 @@ def main():
     # Training a baselines3 PPO model in the environment
     model = PPO("MlpPolicy", env, verbose=1)
     print("Training model...")
-    model.learn(total_timesteps=100)
+    model.learn(total_timesteps=1)
     
     # Save the model
     print("Saving model...")
