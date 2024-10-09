@@ -53,7 +53,7 @@ class NumpyEncoder(json.JSONEncoder):
 
 def main():
     print("Loading model...")
-    model = PPO.load("MyTrainedModel")
+    model = PPO.load("ChangeoverTimesModel")
     FlexSimInferenceServer.model = model
     
     # Create server object
