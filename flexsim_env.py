@@ -25,16 +25,29 @@ class FlexSimEnv(gym.Env):
         self.action_space = self._get_action_space()
         self.observation_space = self._get_observation_space()
 
-    def reset(self):
+    # Updated reset() method to match the new Gym API
+    def reset(self, seed=None, options=None):
+        # Set the seed for the environment
+        if seed is not None:
+            self.seed(seed)
+    
+        # Call any other necessary reset logic
         self._reset_flexsim()
         state, reward, done = self._get_observation()
-        return state
+    
+        return state, {}
 
+    # Updated step() method to match the new Gym API 
     def step(self, action):
         self._take_action(action)
         state, reward, done = self._get_observation()
+
+        # Determine if the episode is terminated or truncated
+        terminated = done
+        truncated = False  # You can set this based on your own logic
         info = {}
-        return state, reward, done, info
+
+        return state, reward, terminated, truncated, info
 
     def render(self, mode='human'):
         if mode == 'rgb_array':
@@ -200,25 +213,29 @@ def main():
 
     env = FlexSimEnv(
         flexsimPath = "C:/Program Files/FlexSim 2024 Update 2/program/flexsim.exe", # Edit Local Path to FlexSim executable
-        modelPath = "C:/Users/steal/Documents/FlexSim 2024 Projects/Models/ChangeoverTimesRL.fsm", # Edit Local Path to FlexSim model
+        modelPath = "C:/Users/steal/Documents/FlexSim/Test_Models/ChangeoverTimesRL.fsm", # Edit Local Path to FlexSim model
         verbose = True,
         visible = True
         )
 
     for i in range(2):
         env.seed(i)
-        observation = env.reset()
+        observation, _ = env.reset()  # Unpack the observation from the tuple
         env.render()
         done = False
         rewards = []
         while not done:
             action = env.action_space.sample()
-            observation, reward, done, info = env.step(action)
+            observation, reward, terminated, truncated, info = env.step(action)  # Unpack all 5 return values
             env.render()
             rewards.append(reward)
+
+            done = terminated or truncated  # Combine both to check if the episode is finished
+        
             if done:
                 cumulative_reward = sum(rewards)
                 print("Reward: ", cumulative_reward, "\n")
+                
     env._release_flexsim()
     input("Waiting for input to close FlexSim...")
     env.close()
